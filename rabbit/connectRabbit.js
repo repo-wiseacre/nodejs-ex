@@ -1,6 +1,6 @@
 const amqp = require('amqplib/callback_api');
 
-amqp.connect('amqp://localhost', function(error, connection) {
+amqp.connect(PROCESS.ENV.cloudamqp_uri, function(error, connection) {
   if (error) {
     throw error;
   }
