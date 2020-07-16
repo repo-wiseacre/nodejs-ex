@@ -41,7 +41,7 @@ alert("hi........ 1234567890..........");
 var express = require('express'),
     app     = express(),
     morgan  = require('morgan'),
-    rabbit  = require('/rabbit/connectRabbit');
+    rabbit  = require('/projects/nodejs-x/rabbit/connectRabbit');
     
 Object.assign=require('object-assign')
 

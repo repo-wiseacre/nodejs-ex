@@ -1,5 +1,5 @@
-const amqp = require('amqplib/callback_api');
-
+const amqp = require('/projects/nodejs-x/node_modules/amqplib/callback_api');
+//console.log("------------------------------"+process.env.CLOUDAMQP_URI+"-----------------------");
 amqp.connect(process.env.CLOUDAMQP_URI, function(error, connection) {
   if (error) {
     throw error;
