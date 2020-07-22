@@ -40,13 +40,13 @@ console.log("hi........ 1234567890..........");
 console.log("hi........ 1234567890..........");
 var express = require('express'),
     app     = express(),
-    morgan  = require('morgan'),
+    morgan  = require('morgan');
     //rabbit  = require('./rabbit/connectRabbit');
     
-//Object.assign=require('object-assign')
+Object.assign=require('object-assign');
 
-//app.engine('html', require('ejs').renderFile);
-//app.use(morgan('combined'))
+app.engine('html', require('ejs').renderFile);
+app.use(morgan('combined'));
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
