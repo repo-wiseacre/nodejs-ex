@@ -32,12 +32,12 @@ log4js.configure({
       "http": { "appenders": [ "access"], "level": "DEBUG" }
     }
   });
-alert("hi.....")
-alert("ip================="+face.address);
-alert("hi........ 1234567890.....1.....");
+console.log("hi.....")
+console.log("ip================="+face.address);
+console.log("hi........ 1234567890.....1.....");
 
 console.log("hi........ 1234567890..........");
-alert("hi........ 1234567890..........");
+console.log("hi........ 1234567890..........");
 var express = require('express'),
     app     = express(),
     morgan  = require('morgan'),
@@ -64,15 +64,15 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
-alert("port========================================"+port);
-alert("IP========================================"+ip);
-alert("mongoURL========================================"+mongoURL);
+console.log("port========================================"+port);
+console.log("IP========================================"+ip);
+console.log("mongoURL========================================"+mongoURL);
 //mongoURL = "mongodb://user:password@localhost:27017/guestbook";
 
 if (mongoURL == null) {
   var mongoHost, mongoPort, mongoDatabase, mongoPassword, mongoUser;
   // If using plane old env vars via service discovery
-    alert("when mongourl is null");
+    console.log("when mongourl is null");
   if (process.env.DATABASE_SERVICE_NAME) {
     var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase();
     mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'];
@@ -81,21 +81,21 @@ if (mongoURL == null) {
     mongoPassword = process.env[mongoServiceName + '_PASSWORD'].replace("@","%40");
     mongoUser = process.env[mongoServiceName + '_USER'];
       
-      alert("when mongourl is null===============2");
+      console.log("when mongourl is null===============2");
 
   // If using env vars from secret from service binding  
   } else if (process.env.database_name) {
-    alert("database_name======================"+process.env.database_name)
+    console.log("database_name======================"+process.env.database_name)
     mongoDatabase = process.env.database_name;
     mongoPassword = process.env.password;
     mongoUser = process.env.username;
-      alert("when mongourl is null===============3");
+      console.log("when mongourl is null===============3");
     var mongoUriParts = process.env.uri && process.env.uri.split("//");
     if (mongoUriParts.length == 2) {
       mongoUriParts = mongoUriParts[1].split(":");
-        alert("when mongourl is null=============4");
+        console.log("when mongourl is null=============4");
       if (mongoUriParts && mongoUriParts.length == 2) {
-          alert("when mongourl is null===========5");
+          console.log("when mongourl is null===========5");
         mongoHost = mongoUriParts[0];
         mongoPort = mongoUriParts[1];
       }
@@ -104,29 +104,29 @@ if (mongoURL == null) {
 
   if (mongoHost && mongoPort && mongoDatabase) {
       
-      alert("when mongourl is not null==================1");
+      console.log("when mongourl is not null==================1");
     mongoURLLabel = mongoURL = 'mongodb://';
     if (mongoUser && mongoPassword) {
       mongoURL += mongoUser + ':' + mongoPassword + '@';
-        alert("when mongourl is not null==================2");
+        console.log("when mongourl is not null==================2");
     }
     // Provide UI label that excludes user id and pw
     mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
     mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
-      alert("when mongourl is not null==================3");
-      alert("mongoURLLabel=============================="+mongoURLLabel)
+      console.log("when mongourl is not null==================3");
+      console.log("mongoURLLabel=============================="+mongoURLLabel)
       
   }
 }
 var db = null,
     dbDetails = new Object();
-alert("db details==================1");
+console.log("db details==================1");
 var initDb = function(callback) {
   if (mongoURL == null) return;
-    alert("db details==================2"+mongoURL);
+    console.log("db details==================2"+mongoURL);
   var mongodb = require('mongodb');
   if (mongodb == null) return;
-    alert("db details==================3");
+    console.log("db details==================3");
   mongodb.connect(mongoURL, function(err, conn) {
     if (err) {
       callback(err);
@@ -136,87 +136,87 @@ var initDb = function(callback) {
     db = conn;
     if(db){
     
-        alert("db object exists  "+db.databaseName);
+        console.log("db object exists  "+db.databaseName);
     }
     else{
-        alert("db object not exists  ");
+        console.log("db object not exists  ");
     }
 
     dbDetails.databaseName = db.databaseName;
-    alert("db details ======================="+dbDetails.databaseName);
-    alert("mongoURLLabel========================"+mongoURLLabel);
+    console.log("db details ======================="+dbDetails.databaseName);
+    console.log("mongoURLLabel========================"+mongoURLLabel);
     dbDetails.url = mongoURLLabel;
     dbDetails.type = 'MongoDB';
 
     console.log('Connected to MongoDB at: %s', mongoURL);
-    alert("Connected to MongoDB at:"+mongoURL);
+    console.log("Connected to MongoDB at:"+mongoURL);
     
       
     var col = db.collection('counts');
-      alert("counts======================"+col);
-      alert("db details==================4");
-      alert("ip=========================="+ip);
+      console.log("counts======================"+col);
+      console.log("db details==================4");
+      console.log("ip=========================="+ip);
       
     // Create a document with request IP and current time of request
     col.insert({ip: ip, date: Date.now()});
-      alert("db details==================5");
+      console.log("db details==================5");
     col.count(function(err, count){
       if (err) {
         console.log('Error running count. Message:\n'+err);
-        alert("error-----------------1");
-          alert('Error running count. Message:\n'+err);  
+        console.log("error-----------------1");
+          console.log('Error running count. Message:\n'+err);  
           
       }
-      alert("count==========================="+count);
+      console.log("count==========================="+count);
     });
     
   });
   if(db){
     
-    alert("db object exists ===============2 "+db.databaseName);
+    console.log("db object exists ===============2 "+db.databaseName);
   }
   else{
-    alert("db object not exists ===========2 ");
+    console.log("db object not exists ===========2 ");
   }
   
  
 };
 if(db){
     
-    alert("db object exists  "+db.databaseName);
+    console.log("db object exists  "+db.databaseName);
 }
 else{
-    alert("db object not exists  ");
+    console.log("db object not exists  ");
 }
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
-  alert("inside app get ============================"+req);
+  console.log("inside app get ============================"+req);
   if (!db) {
-    initDb(function(err){alert("app get error==========================");});
+    initDb(function(err){console.log("app get error==========================");});
   }
   if (db) {
     var col = db.collection('counts');
-      alert("counts======================"+col);
-      alert("db details==================6");
-      alert("ip=========================="+req.ip);
+      console.log("counts======================"+col);
+      console.log("db details==================6");
+      console.log("ip=========================="+req.ip);
       
     // Create a document with request IP and current time of request
     col.insert({ip: req.ip, date: Date.now()});
-      alert("db details==================7");
+      console.log("db details==================7");
     col.count(function(err, count){
       if (err) {
         console.log('Error running count. Message:\n'+err);
-        alert("error-----------------1");
-          alert('Error running count. Message:\n'+err);  
+        console.log("error-----------------1");
+          console.log('Error running count. Message:\n'+err);  
           
       }
       res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
-        alert("db details==================8");
+        console.log("db details==================8");
     });
   } else {
     res.render('index.html', { pageCountMessage : null});
-      alert("db details==================9");
+      console.log("db details==================9");
   }
 });
 
@@ -238,20 +238,20 @@ app.get('/pagecount', function (req, res) {
 // error handling
 app.use(function(err, req, res, next){
   console.error(err.stack);
-  alert("error-----------------2");
-  alert(err.stack);  
+  console.log("error-----------------2");
+  console.log(err.stack);  
   res.status(500).send('Something bad happened!');
 });
 
 initDb(function(err){
   console.log('Error connecting to Mongo. Message:\n'+err);
-    alert("error-----------------3");
-  alert('Error connecting to Mongo. Message:\n'+err);  
+    console.log("error-----------------3");
+  console.log('Error connecting to Mongo. Message:\n'+err);  
 });
 
 app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
-alert("The End");
-alert("Server running on http://"+ip+port);
-alert("The End");
+console.log("The End");
+console.log("Server running on http://"+ip+port);
+console.log("The End");
 module.exports = app ;
