@@ -3,7 +3,7 @@ var express = require('express'),
     app     = express(),
     morgan  = require('morgan');
 
-const css = require('../src/views/css/piechart.css');
+//const css = require('../src/views/css/piechart.css');
 const data = require('../src/manifest.json');
 
 Object.assign=require('object-assign')
