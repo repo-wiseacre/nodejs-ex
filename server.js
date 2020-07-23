@@ -3,7 +3,7 @@ var express = require('express'),
     app     = express(),
     morgan  = require('morgan');
 
-const data = require('/path/to/manifest.json')
+const data = require('manifest.json')
 
 Object.assign=require('object-assign')
 
