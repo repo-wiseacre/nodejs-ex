@@ -16,8 +16,7 @@
     "alert-node": "3.0.0",
     "os": "0.1.1",
     "cordova": "9.0.0",
-    "amqplib": "0.5.6",
-    "firebase": "7.16.1"
+    "amqplib": "0.5.6"
   },
   "engine": {
     "node": "*",
