@@ -2,7 +2,9 @@
 var express = require('express'),
     app     = express(),
     morgan  = require('morgan');
-    
+
+const data = require('/path/to/manifest.json')
+
 Object.assign=require('object-assign')
 
 app.engine('html', require('ejs').renderFile);
@@ -107,6 +109,12 @@ app.get('/pagecount', function (req, res) {
   } else {
     res.send('{ pageCount: -1 }');
   }
+});
+
+app.get('/manifest.webmanifest', function (req, res) {
+  // try to initialize the db on every request if it's not already
+  // initialized.
+  res.json(data);
 });
 
 // error handling
