@@ -21,7 +21,7 @@ if (mongoURL == null) {
     mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'];
     mongoPort = process.env[mongoServiceName + '_SERVICE_PORT'];
     mongoDatabase = process.env[mongoServiceName + '_DATABASE'];
-    mongoPassword = process.env[mongoServiceName + '_PASSWORD'];
+    mongoPassword = process.env[mongoServiceName + '_PASSWORD'].replace("@","%40");
     mongoUser = process.env[mongoServiceName + '_USER'];
 
   // If using env vars from secret from service binding  
