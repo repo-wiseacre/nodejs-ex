@@ -1,5 +1,6 @@
 //  OpenShift sample Node application
 var express = require('express'),
+    fs      = require('fs'),
     app     = express(),
     morgan  = require('morgan');
  //var sw     = require('../src/js/sw.js');
@@ -128,19 +129,6 @@ app.get('/sw.js', function (req, res) {
         res.end(data);
     });
 });
-
-http.createServer(function(req, res) {
-    if (req.method === 'GET' && req.url === '/') {
-        fs.readFile('./index.html', function(err, data) {
-            if (err){
-                throw err;
-            }
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(data);
-            return;
-        });
-    }
-}).listen(3000);
 
 // error handling
 app.use(function(err, req, res, next){
