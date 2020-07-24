@@ -59,8 +59,8 @@
       "kind": "Route",
       "apiVersion": "v1",
       "metadata": {
+        "kubernetes.io/tls-acme": "true",
         "name": "${NAME}"
-        "kubernetes.io/tls-acme": "true"
       },
       "spec": {
         "host": "${APPLICATION_DOMAIN}",
