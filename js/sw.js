@@ -1,10 +1,10 @@
 var SLOW_TIME = 3000;
 
-this.addEventListener( 'install', function () {
+self.addEventListener( 'install', function () {
   console.log('Installed service worker');
 } );
 
-this.addEventListener( 'fetch', function(event) {
+self.addEventListener( 'fetch', function(event) {
   var url = event.request.url;
 
   if ( url.indexOf( 'blocking' ) === -1) {
