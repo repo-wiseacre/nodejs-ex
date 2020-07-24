@@ -47,14 +47,14 @@
       "kind": "Route",
       "apiVersion": "v1",
       "metadata": {
+        "kubernetes.io/tls-acme": "true",
         "name": "${NAME}"
       },
       "spec": {
         "host": "${APPLICATION_DOMAIN}",
         "to": {
           "kind": "Service",
-          "name": "${NAME}",
-          "kubernetes.io/tls-acme": "true"
+          "name": "${NAME}"
         }
       }
     },
