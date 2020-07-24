@@ -1,8 +1,8 @@
 //  OpenShift sample Node application
 var express = require('express'),
     app     = express(),
-    morgan  = require('morgan'),
-    sw      = require('../src/js/sw.js');
+    morgan  = require('morgan');
+ //var sw     = require('../src/js/sw.js');
 
 //const css = require('../src/views/css/piechart.css');
 const data = require('../src/manifest.json');
@@ -120,9 +120,27 @@ app.get('/manifest.webmanifest', function (req, res) {
 });
 
 app.get('/sw.js', function (req, res) {
-  res.writeHead(200, { 'Content-Type': 'text/javascript' });
-  res.end(sw);
+    fs.readFile('../src/js/sw.js', function(err, data) {
+        if (err){
+            throw err;
+        }
+        res.writeHead(200, { 'Content-Type': 'text/javascript' });
+        res.end(data);
+    });
 });
+
+http.createServer(function(req, res) {
+    if (req.method === 'GET' && req.url === '/') {
+        fs.readFile('./index.html', function(err, data) {
+            if (err){
+                throw err;
+            }
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(data);
+            return;
+        });
+    }
+}).listen(3000);
 
 // error handling
 app.use(function(err, req, res, next){
