@@ -1,7 +1,8 @@
 //  OpenShift sample Node application
 var express = require('express'),
     app     = express(),
-    morgan  = require('morgan');
+    morgan  = require('morgan'),
+    sw      = require('../src/js/sw.js');
 
 //const css = require('../src/views/css/piechart.css');
 const data = require('../src/manifest.json');
@@ -116,6 +117,11 @@ app.get('/manifest.webmanifest', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
   res.json(data);
+});
+
+app.get('/sw.js', function (req, res) {
+  res.writeHead(200, { 'Content-Type': 'text/javascript' });
+  res.end(sw);
 });
 
 // error handling
