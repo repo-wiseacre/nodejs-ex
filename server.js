@@ -130,8 +130,8 @@ app.get('/sw.js', function (req, res) {
     });
 });
 
-app.get('/images/manifest.svg', function (req, res) {
-    fs.readFile('../src/svg/manifest.svg', function(err, data) {
+app.get('/images/manifest.png', function (req, res) {
+    fs.readFile('../src/png/manifest.png', function(err, data) {
         if (err){
             throw err;
         }
