@@ -130,6 +130,17 @@ app.get('/sw.js', function (req, res) {
     });
 });
 
+app.get('/images/manifest.svg', function (req, res) {
+    fs.readFile('../src/svg/manifest.svg', function(err, data) {
+        if (err){
+            throw err;
+        }
+        res.writeHead(200, { 'Content-Type': 'image/svg' });
+        res.end(data);
+    });
+});
+
+
 // error handling
 app.use(function(err, req, res, next){
   console.error(err.stack);
