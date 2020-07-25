@@ -4,12 +4,12 @@
   "description": "Weather forecast information",
   "icons": [
     {
-      "src": "/images/manifest.svg",
+      "src": "/images/manifest.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/images/manifest.svg",
+      "src": "/images/manifest.png",
       "type": "image/png",
       "sizes": "512x512"
     }
@@ -25,14 +25,14 @@
       "short_name": "Today",
       "description": "View weather information for today",
       "url": "/",
-      "icons": [{ "src": "/images/manifest.svg", "sizes": "192x192" }]
+      "icons": [{ "src": "/images/manifest.png", "sizes": "192x192" }]
     },
     {
       "name": "How's weather tomorrow?",
       "short_name": "Tomorrow",
       "description": "View weather information for tomorrow",
       "url": "/",
-      "icons": [{ "src": "/images/manifest.svg", "sizes": "192x192" }]
+      "icons": [{ "src": "/images/manifest.png", "sizes": "192x192" }]
     }
   ]
 }
