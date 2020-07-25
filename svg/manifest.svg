@@ -1,0 +1,18 @@
+<svg width="800" height="248" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <defs>
+  <linearGradient y2="0" x2="1" y1="0" x1="0" id="svg_3">
+   <stop offset="0" stop-color="#ffffaa"/>
+   <stop offset="1" stop-color="#000055"/>
+  </linearGradient>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="url(#svg_3)" id="canvas_background" height="250" width="802" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <text stroke="#000" transform="matrix(1,0,0,0.8709677457809448,0,0.25806450843811035) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="250" id="svg_1" y="228" x="3.5" stroke-opacity="null" stroke-width="0" fill="#5B9BA2">COVID</text>
+  <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="81" id="svg_2" y="242.453125" x="746.5" stroke-width="0" stroke="#559E84" fill="#FFAC8D">+</text>
+ </g>
+</svg>
