@@ -9,7 +9,7 @@ amqp.connect(process.env.CLOUDAMQP_URI, function(error, connection) {
       throw error1;
     }
 
-    let queue = 'sample_rabbit_queue';
+    let queue = 'pika-pika';
     let msg = 'Test message';
 
     channel.assertQueue(queue, {
