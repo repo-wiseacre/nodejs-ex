@@ -24,7 +24,7 @@ function start(queue_name, messagestr) {
 
   amqpConn = connection;
   whenConnected(queue_name,messagestr);
-}
+};
 
 function whenConnected(queue_name,messagestr) {
   startConsumer(queue_name,messagestr);
@@ -68,8 +68,8 @@ function closeOnErr(err) {
 function stop() {
   amqpConn.close();
   return true;
-}
+};
   
 
-module.exports = start;
-module.exports = stop;
+module.exports.start = start;
+module.exports.stop = stop;
