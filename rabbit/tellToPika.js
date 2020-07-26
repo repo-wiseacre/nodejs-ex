@@ -3,6 +3,7 @@ const amqp = require('../node_modules/amqplib/callback_api');
 var amqpConn = null;
   
 function start(queue_name, messagestr) {
+    console.log("inside start tellToPika"+queue_name+messagestr)
     amqp.connect(process.env.CLOUDAMQP_URI, function(error, connection) {
       if (err) {
         console.error("[AMQP]", err.message);
@@ -40,7 +41,7 @@ function startPublisher(queue_name,messagestr){
         durable: true
       });
       if (closeOnErr(error1)) return;
-
+      console.log("send to queue tell to pika")
       channel.sendToQueue(queue, Buffer.from(msg), {
         persistent: true
       });
