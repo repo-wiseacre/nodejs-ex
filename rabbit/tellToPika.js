@@ -61,8 +61,10 @@ function closeOnErr(err) {
 
 
 function stop() {
+  if(amqpConn){
     amqpConn.close();
     return true;
+  }
 };
 
   
