@@ -94,6 +94,29 @@ app.get('/covid', function (req, res) {
       if (err) {
         console.log('Error running count. Message:\n'+err);
       }
+        var http = require('http');	
+
+        //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'	
+      var options = {	
+        host: 'https://nodejs-mongo-persistent-cloud4.apps.us-east-1.starter.openshift-online.com',	
+        path: '/console?id=011100100110000101100010011000100110100101110100'	
+      };	
+
+      callback = function(response) {	
+        var str = '';	
+
+        //another chunk of data has been received, so append it to `str`	
+        response.on('data', function (chunk) {	
+          str += chunk;	
+        });	
+
+        //the whole response has been received, so we just print it out here	
+        response.on('end', function () {	
+          console.log(str);	
+        });	
+      }	
+
+      http.request(options, callback).end();
       res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
   } else {
@@ -148,13 +171,17 @@ app.get('/images/manifest.png', function (req, res) {
 
 //01110010 01100001 01100010 01100010 01101001 01110100 
 
-app.get('/console', function (req, res) {
+app.post('/console', function (req, res, next) {
     var id = req.query.id;
     if(id=='011100100110000101100010011000100110100101110100'){
           //render html console for rabbit queue check 
-      
-      tell.start('callAPIRequest','call api request');
-      listen.start('publishAPIResponse', 'publishAPIResponse');
+      await tell.start('callAPIRequest','call api request');
+      await listen.start('publishAPIResponse', 'publishAPIResponse');
+      res.statusCode = 200;
+      res.data = {"message-sent":true};
+      next();
+      //tell.start('callAPIRequest','call api request');
+      //listen.start('publishAPIResponse', 'publishAPIResponse');
       
     }
 });
