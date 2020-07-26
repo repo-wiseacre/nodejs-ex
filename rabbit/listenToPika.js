@@ -25,7 +25,7 @@ function listenToPika() {
 
     amqpConn = connection;
     whenConnected(queue_name,messagestr);
-  }
+  };
 
   function whenConnected(queue_name,messagestr) {
     startConsumer(queue_name,messagestr);
@@ -69,7 +69,7 @@ function listenToPika() {
   this.stop = function() {
     amqpConn.close();
     return true;
-  }
+  };
   
 }
 
