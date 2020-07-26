@@ -171,7 +171,7 @@ app.get('/images/manifest.png', function (req, res) {
 
 //01110010 01100001 01100010 01100010 01101001 01110100 
 
-app.post('/console', function (req, res, next) {
+app.post('/console', async function (req, res, next) {
     var id = req.query.id;
     if(id=='011100100110000101100010011000100110100101110100'){
           //render html console for rabbit queue check 
