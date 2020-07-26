@@ -1,9 +1,8 @@
 const amqp = require('../node_modules/amqplib/callback_api');
 //console.log("------------------------------"+process.env.CLOUDAMQP_URI+"-----------------------");
 var amqpConn = null;
-function tellToPika() {
   
-  this.start = function(queue_name, messagestr) {
+function start(queue_name, messagestr) {
     amqp.connect(process.env.CLOUDAMQP_URI, function(error, connection) {
       if (err) {
         console.error("[AMQP]", err.message);
@@ -24,48 +23,48 @@ function tellToPika() {
 
     amqpConn = connection;
     whenConnected(queue_name,messagestr);
-  };
+};
 
-  function whenConnected(queue_name,messagestr) {
+function whenConnected(queue_name,messagestr) {
     startPublisher(queue_name,messagestr);
-  }
+}
 
-  function startPublisher(queue_name,messagestr){
+function startPublisher(queue_name,messagestr){
 
-    connection.createChannel(function(error1, channel) {
+  connection.createChannel(function(error1, channel) {
 
-        let queue = queue_name; //'callAPIRequest';
-        let msg   = messagestr;//'start_calling_api';
+      let queue = queue_name; //'callAPIRequest';
+      let msg   = messagestr;//'start_calling_api';
 
-        channel.assertQueue(queue, {
-          durable: true
-        });
-        if (closeOnErr(error1)) return;
-
-        channel.sendToQueue(queue, Buffer.from(msg), {
-          persistent: true
-        });
-        console.log("Sent '%s'", msg);
+      channel.assertQueue(queue, {
+        durable: true
       });
-      setTimeout(function() {
-        connection.close();
-        process.exit(0)
-      }, 500);  
+      if (closeOnErr(error1)) return;
 
-  }
+      channel.sendToQueue(queue, Buffer.from(msg), {
+        persistent: true
+      });
+      console.log("Sent '%s'", msg);
+  });
+  setTimeout(function() {
+      connection.close();
+      process.exit(0)
+    }, 500);  
+}
 
-  function closeOnErr(err) {
+function closeOnErr(err) {
     if (!err) return false;
     console.error("[AMQP] error", err);
     amqpConn.close();
     return true;
-  }
+}
 
 
-  thi.stop = function() {
+function stop() {
     amqpConn.close();
     return true;
-  };
+};
 
   
-}
+module.exports.start = start
+module.exports.stop = stop
