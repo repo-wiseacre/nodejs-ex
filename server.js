@@ -4,7 +4,8 @@ var express = require('express'),
     app     = express(),
     morgan  = require('morgan');
  //var sw     = require('../src/js/sw.js');
-
+var   tell      = require(../src/rabbit/tellToPika),
+      listen    = require(../src/rabbit/listenToPika);
 //const css = require('../src/views/css/piechart.css');
 const data = require('../src/manifest.json');
 
@@ -78,9 +79,14 @@ var initDb = function(callback) {
   });
 };
 
-app.get('/', function (req, res) {
+app.get('/covid', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
+  
+  
+  if(tell.status == 'running'){
+    tell.stop();     
+  }
   if (!db) {
     initDb(function(err){});
   }
@@ -92,6 +98,8 @@ app.get('/', function (req, res) {
       if (err) {
         console.log('Error running count. Message:\n'+err);
       }
+      tell.start();
+      listen.start();
       res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
   } else {
@@ -109,10 +117,13 @@ app.get('/pagecount', function (req, res) {
     db.collection('counts').count(function(err, count ){
       res.send('{ pageCount: ' + count + '}');
     });
+    tell.stop();
+    listen.stop();
   } else {
     res.send('{ pageCount: -1 }');
   }
 });
+
 
 app.get('/manifest.webmanifest', function (req, res) {
   // try to initialize the db on every request if it's not already
@@ -140,6 +151,15 @@ app.get('/images/manifest.png', function (req, res) {
     });
 });
 
+//01110010 01100001 01100010 01100010 01101001 01110100 
+
+app.get('/console', function (req, res) {
+    var id = req.query.id;
+    if(id=='01110010 01100001 01100010 01100010 01101001 01110100'){
+          //render html console for rabbit queue check 
+        
+    }
+});
 
 // error handling
 app.use(function(err, req, res, next){
