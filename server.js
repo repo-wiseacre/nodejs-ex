@@ -83,9 +83,13 @@ app.get('/covid', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
   
-  
-  if(tell.status == 'running'){
-    tell.stop();     
+  var tellobj   = new tell();
+  var listenobj = new listen();
+  if(tellobj.status == 'running'){
+    tellobj.stop();     
+  }
+  if(listenobj.status == 'running'){
+    listenobj.stop();     
   }
   if (!db) {
     initDb(function(err){});
@@ -98,8 +102,8 @@ app.get('/covid', function (req, res) {
       if (err) {
         console.log('Error running count. Message:\n'+err);
       }
-      tell.start();
-      listen.start();
+      tellobj.start('callAPIRequest','call api request');
+      listenobj.start('publishAPIResponse', 'publishAPIResponse');
       res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
   } else {
@@ -117,8 +121,10 @@ app.get('/pagecount', function (req, res) {
     db.collection('counts').count(function(err, count ){
       res.send('{ pageCount: ' + count + '}');
     });
-    tell.stop();
-    listen.stop();
+    var tellobj = new tell();
+    var listenobj = new listen();
+    tellobj.stop();
+    listenobj.stop();
   } else {
     res.send('{ pageCount: -1 }');
   }
