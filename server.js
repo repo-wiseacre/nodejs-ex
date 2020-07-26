@@ -83,10 +83,6 @@ app.get('/covid', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
   
-  var tellobj   = new tell();
-  var listenobj = new listen();
-  tellobj.stop();
-  listenobj.stop();
   if (!db) {
     initDb(function(err){});
   }
@@ -138,8 +134,8 @@ app.get('/pagecount', function (req, res) {
     db.collection('counts').count(function(err, count ){
       res.send('{ pageCount: ' + count + '}');
     });
-    var tellobj = new tell();
-    var listenobj = new listen();
+    var tellobj = new tell.tellToPika();
+    var listenobj = new listen.listenToPika();
     tellobj.stop();
     listenobj.stop();
   } else {
@@ -180,8 +176,8 @@ app.get('/console', function (req, res) {
     var id = req.query.id;
     if(id=='01110010 01100001 01100010 01100010 01101001 01110100'){
           //render html console for rabbit queue check 
-      var tellobj = new tell();
-      var listenobj = new listen();
+      var tellobj = new tell.tellToPika();
+      var listenobj = new listen.listenToPika();
       tellobj.start('callAPIRequest','call api request');
       listenobj.start('publishAPIResponse', 'publishAPIResponse');
       
