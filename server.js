@@ -98,8 +98,7 @@ app.get('/covid', function (req, res) {
       if (err) {
         console.log('Error running count. Message:\n'+err);
       }
-      tellobj.start('callAPIRequest','call api request');
-      listenobj.start('publishAPIResponse', 'publishAPIResponse');
+      
       res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
   } else {
@@ -159,7 +158,11 @@ app.get('/console', function (req, res) {
     var id = req.query.id;
     if(id=='01110010 01100001 01100010 01100010 01101001 01110100'){
           //render html console for rabbit queue check 
-        
+      var tellobj = new tell();
+      var listenobj = new listen();
+      tellobj.start('callAPIRequest','call api request');
+      listenobj.start('publishAPIResponse', 'publishAPIResponse');
+      
     }
 });
 
