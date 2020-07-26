@@ -22,23 +22,25 @@ function start(queue_name, messagestr) {
   });
   
   amqpConn = connection;
-  whenConnected();
+  whenConnected(queue_name,messagestr);
 }
 
-function whenConnected() {
-  startConsumer();
+function whenConnected(queue_name,messagestr) {
+  startConsumer(queue_name,messagestr);
 }
 
-function startConsumer(){
+function startConsumer(queue_name,messagestr){
   
   connection.createChannel(function(error1, channel) {
       
-      let queue = 'receiveAPIResponse'; //'callAPIRequest';
+      let queue = queue_name; //'receiveAPIResponse'; //'callAPIRequest';
       let msg   = messagestr;//'start_calling_api';
 
       channel.assertQueue(queue, {
         durable: true
       });
+      if (closeOnErr(error1)) return;
+
       channel.consume(queue, Buffer.from(msg), {
         persistent: true
       });
@@ -59,7 +61,7 @@ function closeOnErr(err) {
 }
 
 
-function stop(queue_name) {
+function stop() {
   amqpConn.close();
   return true;
 }
