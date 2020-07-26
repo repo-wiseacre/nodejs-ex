@@ -100,7 +100,7 @@ app.get('/covid', function (req, res) {
       var options = {	
         host: 'localhost',
         port: '8080',
-        path: '/console
+        path: '/console'
       };	
 
       callback = function(response) {	
