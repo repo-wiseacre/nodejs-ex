@@ -85,12 +85,8 @@ app.get('/covid', function (req, res) {
   
   var tellobj   = new tell();
   var listenobj = new listen();
-  if(tellobj.status == 'running'){
-    tellobj.stop();     
-  }
-  if(listenobj.status == 'running'){
-    listenobj.stop();     
-  }
+  tellobj.stop();
+  listenobj.stop();
   if (!db) {
     initDb(function(err){});
   }
