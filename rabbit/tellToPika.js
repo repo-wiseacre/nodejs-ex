@@ -39,6 +39,8 @@ function startPublisher(){
       channel.assertQueue(queue, {
         durable: true
       });
+      if (closeOnErr(error1)) return;
+
       channel.sendToQueue(queue, Buffer.from(msg), {
         persistent: true
       });
