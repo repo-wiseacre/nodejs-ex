@@ -1,4 +1,5 @@
 const amqp = require('../node_modules/amqplib/callback_api');
+var fs     = require('fs');
 //console.log("------------------------------"+process.env.CLOUDAMQP_URI+"-----------------------");
 var amqpConn = null;
 
@@ -45,6 +46,9 @@ function startConsumer(queue_name,messagestr){
         persistent: true
       });
       console.log("Sent '%s'", msg);
+      fs.writeFile('../data/11001101', msg, function (err) {
+        if (err) throw err;               console.log('Results Received');
+      }); 
     });
     setTimeout(function() {
       connection.close();
