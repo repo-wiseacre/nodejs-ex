@@ -50,12 +50,16 @@ function startPublisher(){
     }, 500);  
   
 }
+
+function closeOnErr(err) {
+  if (!err) return false;
+  console.error("[AMQP] error", err);
+  amqpConn.close();
+  return true;
+}
+
+
 function stop(queue_name) {
-  amqp.connect(process.env.CLOUDAMQP_URI, function(error, connection) {
-    if (error) {
-      throw error;
-    }
-    
-  }
-  
+  amqpConn.close();
+  return true;
 }
