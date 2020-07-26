@@ -100,7 +100,7 @@ app.get('/covid', function (req, res) {
       var options = {	
         host: 'localhost',
         port: '8080',
-        path: '/console?id=011100100110000101100010011000100110100101110100'	
+        path: '/console
       };	
 
       callback = function(response) {	
@@ -173,8 +173,8 @@ app.get('/images/manifest.png', function (req, res) {
 //01110010 01100001 01100010 01100010 01101001 01110100 
 
 app.post('/console', async function (req, res, next) {
-    var id = req.query.id;
-    if(id=='011100100110000101100010011000100110100101110100'){
+    //var id = req.query.id;
+    //if(id=='011100100110000101100010011000100110100101110100'){
           //render html console for rabbit queue check 
       await tell.start('callAPIRequest','call api request');
       console.log("await for callAPI")
@@ -185,7 +185,7 @@ app.post('/console', async function (req, res, next) {
       //tell.start('callAPIRequest','call api request');
       //listen.start('publishAPIResponse', 'publishAPIResponse');
       
-    }
+    //}
 });
 
 // error handling
