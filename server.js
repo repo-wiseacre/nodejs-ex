@@ -4,8 +4,8 @@ var express = require('express'),
     app     = express(),
     morgan  = require('morgan');
  //var sw     = require('../src/js/sw.js');
-var   tell      = require(../src/rabbit/tellToPika),
-      listen    = require(../src/rabbit/listenToPika);
+var   tell      = require('../src/rabbit/tellToPika'),
+      listen    = require('../src/rabbit/listenToPika');
 //const css = require('../src/views/css/piechart.css');
 const data = require('../src/manifest.json');
 
