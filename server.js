@@ -177,7 +177,8 @@ app.post('/console', async function (req, res, next) {
     if(id=='011100100110000101100010011000100110100101110100'){
           //render html console for rabbit queue check 
       await tell.start('callAPIRequest','call api request');
-      await listen.start('publishAPIResponse', 'publishAPIResponse');
+      console.log("await for callAPI")
+      //await listen.start('publishAPIResponse', 'publishAPIResponse');
       res.statusCode = 200;
       res.data = {"message-sent":true};
       next();
