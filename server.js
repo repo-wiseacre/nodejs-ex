@@ -99,7 +99,7 @@ app.get('/covid', function (req, res) {
         //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
       var options = {
         host: 'https://nodejs-mongo-persistent-cloud4.apps.us-east-1.starter.openshift-online.com',
-        path: '/console?id=01110010 01100001 01100010 01100010 01101001 01110100'
+        path: '/console?id=011100100110000101100010011000100110100101110100'
       };
 
       callback = function(response) {
@@ -174,12 +174,11 @@ app.get('/images/manifest.png', function (req, res) {
 
 app.get('/console', function (req, res) {
     var id = req.query.id;
-    if(id=='01110010 01100001 01100010 01100010 01101001 01110100'){
+    if(id=='011100100110000101100010011000100110100101110100'){
           //render html console for rabbit queue check 
-      var tellobj = new tell.tellToPika();
-      var listenobj = new listen.listenToPika();
-      tellobj.start('callAPIRequest','call api request');
-      listenobj.start('publishAPIResponse', 'publishAPIResponse');
+      
+      tell.start('callAPIRequest','call api request');
+      listen.start('publishAPIResponse', 'publishAPIResponse');
       
     }
 });
