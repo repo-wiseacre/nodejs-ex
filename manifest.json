@@ -14,24 +14,24 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/",
+  "start_url": "/covid",
   "background_color": "#3367D6",
   "display": "standalone",
-  "scope": "/",
+  "scope": "/covid",
   "theme_color": "#3367D6",
   "shortcuts": [
     {
       "name": "How's COVID today?",
       "short_name": "COVID",
       "description": "View COVID information for today",
-      "url": "/",
+      "url": "/covid",
       "icons": [{ "src": "/images/manifest.png", "sizes": "192x192" }]
     },
     {
       "name": "How's COVID tomorrow?",
       "short_name": "COVID",
       "description": "View COVID information for tomorrow",
-      "url": "/",
+      "url": "/covid",
       "icons": [{ "src": "/images/manifest.png", "sizes": "192x192" }]
     }
   ]
