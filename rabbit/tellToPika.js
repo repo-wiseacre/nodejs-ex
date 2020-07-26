@@ -22,14 +22,14 @@ function start(queue_name, messagestr) {
   });
   
   amqpConn = connection;
-  whenConnected();
+  whenConnected(queue_name,messagestr);
 }
 
-function whenConnected() {
-  startPublisher();
+function whenConnected(queue_name,messagestr) {
+  startPublisher(queue_name,messagestr);
 }
 
-function startPublisher(){
+function startPublisher(queue_name,messagestr){
   
   connection.createChannel(function(error1, channel) {
       
@@ -61,7 +61,7 @@ function closeOnErr(err) {
 }
 
 
-function stop(queue_name) {
+function stop() {
   amqpConn.close();
   return true;
 }
