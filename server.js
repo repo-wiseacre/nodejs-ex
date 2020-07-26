@@ -134,10 +134,9 @@ app.get('/pagecount', function (req, res) {
     db.collection('counts').count(function(err, count ){
       res.send('{ pageCount: ' + count + '}');
     });
-    var tellobj = new tell.tellToPika();
-    var listenobj = new listen.listenToPika();
-    tellobj.stop();
-    listenobj.stop();
+    
+    tell.stop();
+    listen.stop();
   } else {
     res.send('{ pageCount: -1 }');
   }
