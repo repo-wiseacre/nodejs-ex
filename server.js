@@ -8,7 +8,7 @@ var   tell      = require('../src/rabbit/tellToPika'),
       listen    = require('../src/rabbit/listenToPika');
 //const css = require('../src/views/css/piechart.css');
 const data = require('../src/manifest.json');
-const {spawn} = require('child-process');
+const {spawn} = require('child_process');
 
 Object.assign=require('object-assign')
 
