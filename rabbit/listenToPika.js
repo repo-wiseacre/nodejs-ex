@@ -19,18 +19,18 @@ start:function(queue_name, messagestr,amqpConn) {
       return setTimeout(start, 1000);
     });
     console.log("[AMQP] connected");
-
+    amqpConn = connection;
+    whenConnected(queue_name,messagestr,amqpConn);
   });
 
-  amqpConn = connection;
-  whenConnected(queue_name,messagestr,amqpConn);
+  
 },
 
-function whenConnected(queue_name,messagestr,amqpConn) {
+whenConnected: function(queue_name,messagestr,amqpConn) {
   startConsumer(queue_name,messagestr,amqpConn);
-}
+},
 
-function startConsumer(queue_name,messagestr,amqpConn){
+startConsumer: function(queue_name,messagestr,amqpConn){
 
   connection.createChannel(function(error1, channel) {
 
@@ -55,14 +55,14 @@ function startConsumer(queue_name,messagestr,amqpConn){
       process.exit(0)
     }, 500);  
 
-}
+},
 
-function closeOnErr(err) {
+closeOnErr: function(err) {
   if (!err) return false;
   console.error("[AMQP] error", err);
   amqpConn.close();
   return true;
-}
+},
 
 
 stop:function() {
