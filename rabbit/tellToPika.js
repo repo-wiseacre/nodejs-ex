@@ -24,9 +24,8 @@ var tellToPika = {
         });
         console.log("[AMQP] connected");
         amqpConn = connection;
-        whenConnected(queue_name,messagestr, amqpConn);
-
       });
+      whenConnected(queue_name,messagestr, amqpConn);
   },
  
   startPublisher:function(queue_name,messagestr,amqpConn){
