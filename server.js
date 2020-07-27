@@ -8,6 +8,7 @@ var   tell      = require('../src/rabbit/tellToPika'),
       listen    = require('../src/rabbit/listenToPika');
 //const css = require('../src/views/css/piechart.css');
 const data = require('../src/manifest.json');
+const {spawn} = require('child-process');
 
 Object.assign=require('object-assign')
 
@@ -171,16 +172,34 @@ app.get('/images/manifest.png', function (req, res) {
 
 //01110010 01100001 01100010 01100010 01101001 01110100 
 
-app.get('/console', async function (req, res, next) {
+app.get('/console', async function (req, res) {
     //var id = req.query.id;
     //if(id=='011100100110000101100010011000100110100101110100'){
           //render html console for rabbit queue check 
-      await tell.start('callAPIRequest','call api request');
-      console.log("await for callAPI")
+      //await tell.start('callAPIRequest','call api request');
+      //console.log("await for callAPI")
       //await listen.start('publishAPIResponse', 'publishAPIResponse');
       res.statusCode = 200;
       res.data = {"message-sent":true};
-      next();
+      //next();
+    
+    const tellToPikaService = spawn('node', ['-e','require("../src/rabbit/tellToPika").start("callAPIRequest","callAPI")'], {
+        detach: true,
+        stdio:  'ignore'
+        
+    });
+    tellToPikaService.unref();
+    
+    
+    const listenToPikaService = spawn('node', ['-e','require("../src/rabbit/listenToPika").start("consumeAPIResponse","consumeResponse")'], {
+        detach: true,
+        stdio:  'ignore'
+        
+    });
+    listenToPikaService.unref();
+    res.statusCode = 200;
+    res.data = {"message-sent":true};
+      
       //tell.start('callAPIRequest','call api request');
       //listen.start('publishAPIResponse', 'publishAPIResponse');
       
