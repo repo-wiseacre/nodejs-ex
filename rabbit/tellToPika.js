@@ -4,7 +4,7 @@ var amqpConn = null;
 var tellToPika = {  
   start:function(queue_name, messagestr, amqpConn) {
       console.log("inside start tellToPika"+queue_name+messagestr)
-      amqp.connect(process.env.CLOUDAMQP_URI, function(error, connection) {
+      amqp.connect(process.env.CLOUDAMQP_URI, function(err, connection) {
         if (err) {
           console.error("[AMQP]", err.message);
           return setTimeout(start, 1000);
