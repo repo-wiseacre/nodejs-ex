@@ -24,11 +24,11 @@ var tellToPika = {
       });
   },
 
-  function whenConnected(queue_name,messagestr, amqpConn) {
+  whenConnected:function(queue_name,messagestr, amqpConn) {
       startPublisher(queue_name,messagestr, amqpConn);
-  }
+  },
 
-  function startPublisher(queue_name,messagestr,amqpConn){
+  startPublisher:function(queue_name,messagestr,amqpConn){
 
     amqpConn.createChannel(function(error1, channel) {
 
@@ -49,14 +49,14 @@ var tellToPika = {
         amqpConn.close();
         process.exit(0)
       }, 500);  
-  }
+  },
 
-  function closeOnErr(err) {
+  closeOnErr: function(err) {
       if (!err) return false;
       console.error("[AMQP] error", err);
       amqpConn.close();
       return true;
-  }
+  },
 
 
   stop:function() {
