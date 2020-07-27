@@ -2,9 +2,9 @@ const amqp = require('../node_modules/amqplib/callback_api');
 var fs     = require('fs');
 //console.log("------------------------------"+process.env.CLOUDAMQP_URI+"-----------------------");
 var amqpConn = null;
-
-function start(queue_name, messagestr) {
-  amqp.connect(process.env.CLOUDAMQP_URI, function(error, connection) {
+var listenToPika = {
+start:function(queue_name, messagestr,amqpConn) {
+  amqp.connect(process.env.CLOUDAMQP_URI, function(err, connection) {
     if (err) {
       console.error("[AMQP]", err.message);
       return setTimeout(start, 1000);
@@ -23,14 +23,14 @@ function start(queue_name, messagestr) {
   });
 
   amqpConn = connection;
-  whenConnected(queue_name,messagestr);
-};
+  whenConnected(queue_name,messagestr,amqpConn);
+},
 
-function whenConnected(queue_name,messagestr) {
-  startConsumer(queue_name,messagestr);
+function whenConnected(queue_name,messagestr,amqpConn) {
+  startConsumer(queue_name,messagestr,amqpConn);
 }
 
-function startConsumer(queue_name,messagestr){
+function startConsumer(queue_name,messagestr,amqpConn){
 
   connection.createChannel(function(error1, channel) {
 
@@ -51,7 +51,7 @@ function startConsumer(queue_name,messagestr){
       }); 
     });
     setTimeout(function() {
-      connection.close();
+      amqpConn.close();
       process.exit(0)
     }, 500);  
 
@@ -65,13 +65,16 @@ function closeOnErr(err) {
 }
 
 
-function stop() {
+stop:function() {
   if(amqpConn){
     amqpConn.close();
     return true;
   }
-};
+}
   
+}
 
-module.exports.start = start;
-module.exports.stop = stop;
+module.exports = listenToPika;
+
+//module.exports.start = start;
+//module.exports.stop = stop;
