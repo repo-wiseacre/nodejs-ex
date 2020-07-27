@@ -27,7 +27,7 @@ function startPublisher(queue_name,messagestr,amqpConn){
       process.exit(0)
     }, 500);  
 }
-closeOnErr: function(err) {
+function closeOnErr(err) {
     if (!err) return false;
     console.error("[AMQP] error", err);
     amqpConn.close();
