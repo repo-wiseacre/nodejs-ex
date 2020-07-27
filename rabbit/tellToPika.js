@@ -3,7 +3,9 @@ const amqp = require('../node_modules/amqplib/callback_api');
 var amqpConn = null;
 
 function whenConnected(queue_name,messagestr, amqpConn) {
-  startPublisher(queue_name,messagestr, amqpConn);
+  if(amqpConn){
+    startPublisher(queue_name,messagestr, amqpConn);
+  }
 }
 function startPublisher(queue_name,messagestr,amqpConn){
 
@@ -54,8 +56,8 @@ var tellToPika = {
         });
         console.log("[AMQP] connected");
         amqpConn = connection;
+        whenConnected(queue_name,messagestr, amqpConn);
       });
-      whenConnected(queue_name,messagestr, amqpConn);
   },
 
   stop:function() {
