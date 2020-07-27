@@ -22,7 +22,7 @@ var tellToPika = {
         amqpConn = connection;
         whenConnected(queue_name,messagestr, amqpConn);
       });
-  };
+  },
 
   function whenConnected(queue_name,messagestr, amqpConn) {
       startPublisher(queue_name,messagestr, amqpConn);
