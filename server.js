@@ -116,7 +116,7 @@ app.get('/covid', function (req, res) {
         });	
       }	
 
-      //http.request(options, callback).end();
+      http.request(options, callback).end();
       res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
   } else {
