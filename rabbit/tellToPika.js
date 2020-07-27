@@ -1,11 +1,11 @@
 const amqp = require('../node_modules/amqplib/callback_api');
 //console.log("------------------------------"+process.env.CLOUDAMQP_URI+"-----------------------");
 var amqpConn = null;
+
+function whenConnected(queue_name,messagestr, amqpConn) {
+  startPublisher(queue_name,messagestr, amqpConn);
+}
 var tellToPika = {  
-   whenConnected: function(queue_name,messagestr, amqpConn) {
-      startPublisher(queue_name,messagestr, amqpConn);
-  },
-  
   start:function(queue_name, messagestr, amqpConn) {
       console.log("inside start tellToPika"+queue_name+messagestr)
       amqp.connect(process.env.CLOUDAMQP_URI, function(err, connection) {
