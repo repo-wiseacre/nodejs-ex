@@ -29,6 +29,11 @@ function processMsg(msg) {
 }
 function work(msg, cb) {
   console.log("PDF processing of ", msg.content.toString());
+  var path = process.env.OLDPWD+'/data/11001101';
+  fs.writeFile(path, msg, function (err) {
+    if (err) throw err;               
+    console.log('Results Received');
+  });
   cb(true);
 }
 function startConsumer(queue_name,messagestr,amqpConn){
