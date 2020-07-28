@@ -4,7 +4,7 @@ var fs     = require('fs');
 var amqpConn = null;
 var queue_name = '';
 var messagestr = '';
-
+var ch = null;
 function whenConnected(queue_name,messagestr,amqpConn) {
   startConsumer(queue_name,messagestr,amqpConn);
 }
@@ -19,9 +19,9 @@ function processMsg(msg) {
   work(msg, function(ok) {
     try {
       if (ok)
-        channel.ack(msg);
+        ch.ack(msg);
       else
-        channel.reject(msg, true);
+        ch.reject(msg, true);
     } catch (e) {
       closeOnErr(e);
     }
