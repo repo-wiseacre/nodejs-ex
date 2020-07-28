@@ -180,8 +180,8 @@ app.get('/console', async function (req, res) {
       //await tell.start('callAPIRequest','call api request');
       //console.log("await for callAPI")
       //await listen.start('publishAPIResponse', 'publishAPIResponse');
-      res.statusCode = 200;
-      res.data = {"message-sent":true};
+      //res.statusCode = 200;
+      //res.data = {"message-sent":true};
       //next();
     
     const tellToPikaService = spawn('node', ['-e','require("../src/rabbit/tellToPika").start("callAPIRequest","callAPI")'], {
@@ -201,7 +201,7 @@ app.get('/console', async function (req, res) {
     console.log("listenToPika service");
     res.statusCode = 200;
     res.data = {"message-sent":true};
-      
+    res.end();  
       //tell.start('callAPIRequest','call api request');
       //listen.start('publishAPIResponse', 'publishAPIResponse');
       
