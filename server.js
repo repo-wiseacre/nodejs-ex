@@ -119,7 +119,20 @@ app.get('/covid', function (req, res) {
       }	
 
       //http.request(options, callback).end();
-      
+      const tellToPikaService = spawn('node', ['-e','require("../src/rabbit/tellToPika").start("callAPIRequest","callAPI")'], {
+            detach: true,
+            stdio:  'ignore'
+
+        });
+        tellToPikaService.unref();
+
+        console.log("tellToPika service");
+        const listenToPikaService = spawn('node', ['-e','require("../src/rabbit/listenToPika").start("consumeAPIResponse","consumeResponse")'], {
+            detach: true,
+            stdio:  'ignore'
+
+        });
+        listenToPikaService.unref();
       http.get(options, function(resp){
           resp.on('data', function(chunk){
             //do something with chunk
