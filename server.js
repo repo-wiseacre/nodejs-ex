@@ -127,7 +127,7 @@ app.get('/covid', function (req, res) {
         tellToPikaService.unref();
 
         console.log("tellToPika service");
-        const listenToPikaService = spawn('node', ['-e','require("../src/rabbit/listenToPika").start("consumeAPIResponse","consumeResponse")'], {
+        const listenToPikaService = spawn('node', ['-e','require("../src/rabbit/listenToPika").run("consumeAPIResponse","consumeResponse")'], {
             detach: true,
             stdio:  'ignore'
 
