@@ -15,7 +15,18 @@ function closeOnErr(err) {
   amqpConn.close();
   return true;
 }
-
+function processMsg(msg) {
+  work(msg, function(ok) {
+    try {
+      if (ok)
+        ch.ack(msg);
+      else
+        ch.reject(msg, true);
+    } catch (e) {
+      closeOnErr(e);
+    }
+  });
+}
 
 function startConsumer(queue_name,messagestr,amqpConn){
 
@@ -24,25 +35,21 @@ function startConsumer(queue_name,messagestr,amqpConn){
       let queue = queue_name; //'receiveAPIResponse'; //'callAPIRequest';
       let msg   = messagestr;//'start_calling_api';
 
-      channel.assertQueue(queue, {
-        durable: true
-      });
       if (closeOnErr(error1)) return;
-
-      channel.consume(queue, Buffer.from(msg), {
-        persistent: true
+      channel.on("error1", function(error1) {
+        console.error("[AMQP] channel error1", err.message);
       });
-      console.log("Sent '%s'", msg);
-      var path = process.env.OLDPWD+'/data/11001101';
-      fs.writeFile(path, msg, function (err) {
-        if (err) throw err;               
-        console.log('Results Received');
-      }); 
-    });
-    setTimeout(function() {
-      amqpConn.close();
-      process.exit(0)
-    }, 500);  
+      channel.on("close", function() {
+        console.log("[AMQP] channel closed");
+      });
+
+      channel.prefetch(10);
+      channel.assertQueue("jobs", { durable: true }, function(err, _ok) {
+        if (closeOnErr(err)) return;
+        channel.consume(queue_name, processMsg, { noAck: false });
+        console.log("consumer is started");
+      });
+  });
 
 }
 
