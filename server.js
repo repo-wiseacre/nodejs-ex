@@ -173,7 +173,7 @@ app.get('/images/manifest.png', function (req, res) {
 
 //01110010 01100001 01100010 01100010 01101001 01110100 
 
-app.get('/console', async function (req, res) {
+app.get('/console', async function (req, res, next) {
     //var id = req.query.id;
     //if(id=='011100100110000101100010011000100110100101110100'){
           //render html console for rabbit queue check 
@@ -199,9 +199,10 @@ app.get('/console', async function (req, res) {
     });
     listenToPikaService.unref();
     console.log("listenToPika service");
-    //res.statusCode = 200;
-    //res.data = {"message-sent":true};
-    res.end();  
+    res.statusCode = 200;
+    res.data = {"message-sent":true};
+    //res.end(); 
+    next();
       //tell.start('callAPIRequest','call api request');
       //listen.start('publishAPIResponse', 'publishAPIResponse');
       
