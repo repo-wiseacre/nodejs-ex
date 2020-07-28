@@ -191,13 +191,14 @@ app.get('/console', async function (req, res) {
     });
     tellToPikaService.unref();
     
-    
+    console.log("tellToPika service");
     const listenToPikaService = spawn('node', ['-e','require("../src/rabbit/listenToPika").start("consumeAPIResponse","consumeResponse")'], {
         detach: true,
         stdio:  'ignore'
         
     });
     listenToPikaService.unref();
+    console.log("listenToPika service");
     res.statusCode = 200;
     res.data = {"message-sent":true};
       
