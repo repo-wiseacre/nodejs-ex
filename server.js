@@ -100,7 +100,7 @@ app.get('/covid', function (req, res) {
         //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'	
       var options = {	
         host: 'http://nodejs-mongo-persistent-cloud4.apps.us-east-1.starter.openshift-online.com',
-        port: '80',
+        //port: '80',
         path: '../console'
       };	
 
