@@ -99,8 +99,8 @@ app.get('/covid', function (req, res) {
 
         //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'	
       var options = {	
-        host: '0.0.0.0',
-        //port: '8080',
+        host: 'localhost',
+        port: '80',
         path: '../console'
       };	
 
@@ -118,7 +118,16 @@ app.get('/covid', function (req, res) {
         });	
       }	
 
-      http.request(options, callback).end();
+      //http.request(options, callback).end();
+      
+      http.get(options, function(resp){
+          resp.on('data', function(chunk){
+            //do something with chunk
+          });
+        }).on("error", function(e){
+          console.log("Got error: " + e.message);
+        });  
+        
       res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
   } else {
