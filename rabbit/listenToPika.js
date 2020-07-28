@@ -2,7 +2,8 @@ const amqp = require('../node_modules/amqplib/callback_api');
 var fs     = require('fs');
 //console.log("------------------------------"+process.env.CLOUDAMQP_URI+"-----------------------");
 var amqpConn = null;
-
+var queue_name = '';
+var messagestr = '';
 
 function whenConnected(queue_name,messagestr,amqpConn) {
   startConsumer(queue_name,messagestr,amqpConn);
@@ -45,9 +46,7 @@ function startConsumer(queue_name,messagestr,amqpConn){
 
 }
 
-
-var listenToPika = {
-start:function(queue_name, messagestr,amqpConn) {
+function start() {
   amqp.connect(process.env.CLOUDAMQP_URI, function(err, connection) {
     if (err) {
       console.error("[AMQP]", err.message);
@@ -68,7 +67,16 @@ start:function(queue_name, messagestr,amqpConn) {
   });
 
   
+}
+var listenToPika = {
+run: function(queuename, message) {
+     queue_name = queuename;
+     messagestr = message;
+     console.log(queue_name);
+     console.log(messagestr);
+     listenToPika.start();
 },
+
 
 stop:function() {
   if(amqpConn){
@@ -79,7 +87,7 @@ stop:function() {
   
 }
 
-//listenToPika.start('receiveAPIResponse', 'receiveAPIResponse');
+//listenToPika.run('consumeAPIResponse', 'receiveAPIResponse');
 
 module.exports = listenToPika;
 
