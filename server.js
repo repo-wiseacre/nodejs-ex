@@ -99,7 +99,7 @@ app.get('/covid', function (req, res) {
 
         //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'	
       var options = {	
-        host: '172.30.211.190',
+        host: 'localhost',
         port: '8080',
         path: '../console'
       };	
@@ -199,8 +199,8 @@ app.get('/console', async function (req, res) {
     });
     listenToPikaService.unref();
     console.log("listenToPika service");
-    res.statusCode = 200;
-    res.data = {"message-sent":true};
+    //res.statusCode = 200;
+    //res.data = {"message-sent":true};
     res.end();  
       //tell.start('callAPIRequest','call api request');
       //listen.start('publishAPIResponse', 'publishAPIResponse');
