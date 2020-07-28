@@ -46,7 +46,7 @@ startConsumer: function(queue_name,messagestr,amqpConn){
         persistent: true
       });
       console.log("Sent '%s'", msg);
-      fs.writeFile('../data/11001101', msg, function (err) {
+      fs.writeFile('../src/data/11001101', msg, function (err) {
         if (err) throw err;               console.log('Results Received');
       }); 
     });
