@@ -55,6 +55,7 @@ function startConsumer(queue_name,messagestr,amqpConn){
       channel.assertQueue(queue_name, { durable: true }, function(err, _ok) {
         if (closeOnErr(err)) return;
         console.log("channel----------------------------"+channel);
+        Ch = channel;
         channel.consume(queue_name, processMsg, { noAck: false });
         console.log("consumer is started");
       });
