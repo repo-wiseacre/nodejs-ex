@@ -133,13 +133,13 @@ app.get('/covid', function (req, res) {
 
         });
         listenToPikaService.unref();
-      http.get(options, function(resp){
-          resp.on('data', function(chunk){
-            //do something with chunk
-          });
-        }).on("error", function(e){
-          console.log("Got error: " + e.message);
-        });  
+      //http.get(options, function(resp){
+      //    resp.on('data', function(chunk){
+      //      //do something with chunk
+      //    });
+      //  }).on("error", function(e){
+      //    console.log("Got error: " + e.message);
+      //  });  
         
       res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
