@@ -74,7 +74,7 @@ run: function(queuename, message) {
      messagestr = message;
      console.log(queue_name);
      console.log(messagestr);
-     listenToPika.start();
+     start();
 },
 
 
