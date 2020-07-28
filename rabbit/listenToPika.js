@@ -27,7 +27,10 @@ function processMsg(msg) {
     }
   });
 }
-
+function work(msg, cb) {
+  console.log("PDF processing of ", msg.content.toString());
+  cb(true);
+}
 function startConsumer(queue_name,messagestr,amqpConn){
 
   amqpConn.createChannel(function(error1, channel) {
@@ -44,7 +47,7 @@ function startConsumer(queue_name,messagestr,amqpConn){
       });
 
       channel.prefetch(10);
-      channel.assertQueue("jobs", { durable: true }, function(err, _ok) {
+      channel.assertQueue(queue_name, { durable: true }, function(err, _ok) {
         if (closeOnErr(err)) return;
         channel.consume(queue_name, processMsg, { noAck: false });
         console.log("consumer is started");
