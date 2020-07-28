@@ -19,9 +19,9 @@ function processMsg(msg) {
   work(msg, function(ok) {
     try {
       if (ok)
-        ch.ack(msg);
+        channel.ack(msg);
       else
-        ch.reject(msg, true);
+        channel.reject(msg, true);
     } catch (e) {
       closeOnErr(e);
     }
