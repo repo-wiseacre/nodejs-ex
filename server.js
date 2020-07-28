@@ -99,7 +99,7 @@ app.get('/covid', function (req, res) {
 
         //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'	
       var options = {	
-        host: 'localhost',
+        host: '127.0.0.1',
         //port: '8080',
         path: '../console'
       };	
