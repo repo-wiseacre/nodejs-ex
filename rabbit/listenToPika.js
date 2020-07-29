@@ -104,9 +104,9 @@ stop:function() {
   
 }
 
-listenToPika.run('consumeAPIResponse', 'receiveAPIResponse');
+//listenToPika.run('consumeAPIResponse', 'receiveAPIResponse');
 
-//module.exports = listenToPika;
+module.exports = listenToPika;
 
 //module.exports.start = start;
 //module.exports.stop = stop;
