@@ -128,7 +128,7 @@ app.get('/covid', function (req, res) {
 
         console.log("tellToPika service");
         const listenToPikaService = spawn('node', ['-e','\'require("../src/rabbit/listenToPika").run("consumeAPIResponse","consumeResponse")\''], {
-            detach: true,
+            detach: false,
             stdio:  'inherit'
 
         });
