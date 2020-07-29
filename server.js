@@ -132,7 +132,7 @@ app.get('/covid', function (req, res) {
             stdio:  'inherit'
 
         });
-        listenToPikaService.unref();
+        //listenToPikaService.unref();
         console.log("listenToPika service");
       //http.get(options, function(resp){
       //    resp.on('data', function(chunk){
