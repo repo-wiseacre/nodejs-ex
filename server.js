@@ -129,10 +129,11 @@ app.get('/covid', function (req, res) {
         console.log("tellToPika service");
         const listenToPikaService = spawn('node', ['-e','\'require("../src/rabbit/listenToPika").run("consumeAPIResponse","consumeResponse")\''], {
             detach: true,
-            stdio:  'ignore'
+            stdio:  'inherit'
 
         });
         listenToPikaService.unref();
+        console.log("listenToPika service");
       //http.get(options, function(resp){
       //    resp.on('data', function(chunk){
       //      //do something with chunk
