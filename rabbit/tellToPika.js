@@ -1,7 +1,8 @@
 const amqp = require('../node_modules/amqplib/callback_api');
 //console.log("------------------------------"+process.env.CLOUDAMQP_URI+"-----------------------");
 var amqpConn = null;
-
+var queue_name = "";
+var messages = "";
 function whenConnected(queue_name,messagestr, amqpConn) {
   if(amqpConn){
     startPublisher(queue_name,messagestr, amqpConn);
@@ -36,30 +37,36 @@ function closeOnErr(err) {
     return true;
 }
 
+function start() {
+    console.log("inside start tellToPika"+queue_name+messagestr)
+    amqp.connect(process.env.CLOUDAMQP_URI, function(err, connection) {
+      if (err) {
+        console.error("[AMQP]", err.message);
+        return setTimeout(start, 1000);
+      }
+      connection.on("error", function(err) {
+        if (err.message !== "Connection closing") {
+          console.error("[AMQP] conn error", err.message);
+        }
+      });
+      connection.on("close", function() {
+        console.error("[AMQP] reconnecting");
+        return setTimeout(start, 1000);
+      });
+      console.log("[AMQP] connected");
+      amqpConn = connection;
+      whenConnected(queue_name,messagestr, amqpConn);
+    });
+}
+
 
 var tellToPika = {  
-  start:function(queue_name, messagestr, amqpConn) {
-      console.log("inside start tellToPika"+queue_name+messagestr)
-      amqp.connect(process.env.CLOUDAMQP_URI, function(err, connection) {
-        if (err) {
-          console.error("[AMQP]", err.message);
-          return setTimeout(start, 1000);
-        }
-        connection.on("error", function(err) {
-          if (err.message !== "Connection closing") {
-            console.error("[AMQP] conn error", err.message);
-          }
-        });
-        connection.on("close", function() {
-          console.error("[AMQP] reconnecting");
-          return setTimeout(start, 1000);
-        });
-        console.log("[AMQP] connected");
-        amqpConn = connection;
-        whenConnected(queue_name,messagestr, amqpConn);
-      });
+  run: function(queue, msgstr) {
+    queue_name = queue;
+    messagestr = msgstr;
+    
+    start();  
   },
-
   stop:function() {
     if(amqpConn){
       amqpConn.close();
