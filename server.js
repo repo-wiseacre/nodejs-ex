@@ -122,11 +122,11 @@ app.get('/covid', function (req, res) {
       
         const listenToPikaService = spawn('node', ['-e','require("../src/rabbit/listenToPika.js").run("consumeAPIResponse","consumeResponse")']);
         listenToPikaService.stdout.on('data', (data) => {
-          console.log('listenToPikaService stdout:\n${data}');
+          console.log(`listenToPikaService stdout:\n${data}`);
         });
 
         listenToPikaService.stderr.on('data', (data) => {
-          console.error('listenToPikaService stderr:\n${data}');
+          console.error(`listenToPikaService stderr:\n${data}`);
         });
         listenToPikaService.unref();
         
@@ -136,11 +136,11 @@ app.get('/covid', function (req, res) {
 
         
         tellToPikaService.stdout.on('data', (data) => {
-          console.log('tellToPikaService stdout:\n${data}');
+          console.log(`tellToPikaService stdout:\n${data}`);
         });
 
         tellToPikaService.stderr.on('data', (data) => {
-          console.error('tellToPikaService stderr:\n${data}');
+          console.error(`tellToPikaService stderr:\n${data}`);
         });
         tellToPikaService.unref();
 
