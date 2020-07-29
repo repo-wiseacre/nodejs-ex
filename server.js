@@ -132,7 +132,7 @@ app.get('/covid', function (req, res) {
         
         console.log("listenToPika service");
         
-        const tellToPikaService = spawn('node', ['-e','require("../src/rabbit/tellToPika").start("callAPIRequest","callAPI")']);
+        const tellToPikaService = spawn('node', ['-e','require("../src/rabbit/tellToPika").run("callAPIRequest","callAPI")']);
 
         
         tellToPikaService.stdout.on('data', (data) => {
