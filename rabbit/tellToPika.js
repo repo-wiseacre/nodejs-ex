@@ -22,9 +22,9 @@ function startPublisher(queue_name,messagestr,amqpConn){
       channel.assertQueue(queue, {
         durable: true
       });
-      if (closeOnErr(err)) return;
-      channel.on("error", function(err) {
-        console.error("[AMQP] channel error", err.message);
+      if (closeOnErr(error1)) return;
+      channel.on("error", function(error1) {
+        console.error("[AMQP] channel error", error1.message);
       });
       channel.on("close", function() {
         console.log("[AMQP] channel closed");
