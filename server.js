@@ -8,8 +8,7 @@ var   tell      = require('../src/rabbit/tellToPika'),
       listen    = require('../src/rabbit/listenToPika');
 //const css = require('../src/views/css/piechart.css');
 const data = require('../src/manifest.json');
-const {spawn1} = require('child_process');
-const {spawn2} = require('child_process');
+const {spawn} = require('child_process');
 
 Object.assign=require('object-assign')
 
@@ -121,23 +120,39 @@ app.get('/covid', function (req, res) {
 
       //http.request(options, callback).end();
       
-        const listenToPikaService = spawn1('node', ['-e','require("../src/rabbit/listenToPika.js").run("consumeAPIResponse","consumeResponse")'], {
+        const listenToPikaService = spawn('node', ['-e','require("../src/rabbit/listenToPika.js").run("consumeAPIResponse","consumeResponse")'], {
             detach: true,
-            stdio:  'ignore'
+            stdio:  'unherit'
 
         });
+        listenToPikaService.stdout.on('data', (data) => {
+          console.log(`child stdout:\n${data}`);
+        });
+
+        listenToPikaService.stderr.on('data', (data) => {
+          console.error(`child stderr:\n${data}`);
+        });
         listenToPikaService.unref();
+        
         console.log("listenToPika service");
         
-        const tellToPikaService = spawn2('node', ['-e','require("../src/rabbit/tellToPika").start("callAPIRequest","callAPI")'], {
+        const tellToPikaService = spawn('node', ['-e','require("../src/rabbit/tellToPika").start("callAPIRequest","callAPI")'], {
             detach: true,
-            stdio:  'ignore'
+            stdio:  'inherit'
 
+        });
+
+        
+        tellToPikaService.stdout.on('data', (data) => {
+          console.log(`child stdout:\n${data}`);
+        });
+
+        tellToPikaService.stderr.on('data', (data) => {
+          console.error(`child stderr:\n${data}`);
         });
         tellToPikaService.unref();
 
         console.log("tellToPika service");
-        
         
       //http.get(options, function(resp){
       //    resp.on('data', function(chunk){
