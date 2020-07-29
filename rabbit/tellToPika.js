@@ -32,7 +32,7 @@ function startPublisher(queue_name,messagestr,amqpConn){
 
       ch = channel;
       while (true) {
-        //offlinePubQueue.push(["", queue_name, new Buffer(messagestr)]);
+        offlinePubQueue.push(["", queue_name, new Buffer(messagestr)]);
         var [exchange, routingKey, content] = offlinePubQueue.shift();
         publish(exchange, routingKey, content);
       }
