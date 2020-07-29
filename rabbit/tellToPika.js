@@ -32,7 +32,7 @@ function startPublisher(queue_name,messagestr,amqpConn){
 
       ch = channel;
       while (true) {
-        offlinePubQueue.push(["", queue_name, messagestr]);
+        //offlinePubQueue.push(["", queue_name, new Buffer(messagestr)]);
         var [exchange, routingKey, content] = offlinePubQueue.shift();
         publish(exchange, routingKey, content);
       }
@@ -93,7 +93,9 @@ var tellToPika = {
   run: function(queue, msgstr) {
     queue_name = queue;
     messagestr = msgstr;
-    
+    setInterval(function(queue_name, messagestr) {
+      publish("", queue_name, new Buffer(messagestr));
+    }, 1000);
     start();  
   },
   stop:function() {
