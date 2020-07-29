@@ -29,9 +29,9 @@ function processMsg(msg) {
 }
 function work(msg, cb) {
   console.log("PDF processing of ", msg.content.toString());
-  console.log(process.env.OLDPWD);
-  const path = process.env.OLDPWD;
-  console.log(process.env.OLDPWD);
+  console.log(process.env.HOME);
+  const path = process.env.HOME;
+  console.log(process.env.HOME);
   const filepath = path.concat("/data/11001101");
   fs.writeFile(filepath, msg, function (err) {
     if (err) throw err;               
