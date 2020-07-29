@@ -3,6 +3,10 @@ const amqp = require('../node_modules/amqplib/callback_api');
 var amqpConn = null;
 var queue_name = "";
 var messages = "";
+var ch = null;
+var offlinePubQueue = [];
+
+
 function whenConnected(queue_name,messagestr, amqpConn) {
   if(amqpConn){
     startPublisher(queue_name,messagestr, amqpConn);
@@ -18,18 +22,43 @@ function startPublisher(queue_name,messagestr,amqpConn){
       channel.assertQueue(queue, {
         durable: true
       });
-      if (closeOnErr(error1)) return;
-      console.log("send to queue tell to pika")
-      channel.sendToQueue(queue, Buffer.from(msg), {
-        persistent: true
+      if (closeOnErr(err)) return;
+      channel.on("error", function(err) {
+        console.error("[AMQP] channel error", err.message);
       });
-      console.log("Sent '%s'", msg);
+      channel.on("close", function() {
+        console.log("[AMQP] channel closed");
+      });
+
+      ch = channel;
+      while (true) {
+        offlinePubQueue.push(["", queue_name, messagestr]);
+        var [exchange, routingKey, content] = offlinePubQueue.shift();
+        publish(exchange, routingKey, content);
+      }
   });
   setTimeout(function() {
       amqpConn.close();
       process.exit(0)
     }, 500);  
 }
+function publish(exchange, routingKey, content) {
+  try {
+    
+    ch.publish(exchange, routingKey, content, { persistent: true },
+                      function(err, ok) {
+                        if (err) {
+                          console.error("[AMQP] publish", err);
+                          offlinePubQueue.push([exchange, routingKey, content]);
+                          pubChannel.connection.close();
+                        }
+                      });
+  } catch (e) {
+    console.error("[AMQP] publish", e.message);
+    offlinePubQueue.push([exchange, routingKey, content]);
+  }
+}
+
 function closeOnErr(err) {
     if (!err) return false;
     console.error("[AMQP] error", err);
